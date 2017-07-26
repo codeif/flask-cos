@@ -11,7 +11,10 @@ Flask-COS
     pip install Flask-COS
 
 
-使用::
+使用
+----
+
+.. code-block:: python
 
     from flask_cos import COS
     cos = COS()
@@ -19,7 +22,8 @@ Flask-COS
     cos.upload(content, cos_path)
 
 
-配置项:
+配置项
+------
 
 ================    ==================================================================
 配置项              说明
