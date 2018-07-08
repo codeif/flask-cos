@@ -1,4 +1,7 @@
-# -*- coding: utf-8 -*-
+import uuid
+from mimetypes import guess_extension
+from urllib.parse import urljoin
+
 from qcos.client import COSClient
 
 
@@ -23,3 +26,19 @@ class COS(object):
         """
         return self.client.upload_content(content, cos_path,
                                           insertOnly=insertOnly)
+
+    def get_url(self, key):
+        return urljoin(self.host, key)
+
+
+def gen_filename(mimetype=''):
+    """使用uuid生成随机文件名
+    :params mimetype: 用于生成文件扩展名
+    """
+    ext = guess_extension(mimetype)
+    if ext == '.jpe':
+        ext = '.jpg'
+    elif ext is None:
+        ext = ''
+
+    return uuid.uuid4().hex + ext
