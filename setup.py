@@ -7,7 +7,7 @@ with open('README.rst') as f:
 
 setup(
     name='Flask-COS',
-    version='0.1.1',
+    version='0.1.2',
     description='腾讯云对象存储的Flask扩展',
     long_description=readme,
     author='codeif',

@@ -27,6 +27,9 @@ class COS(object):
         return self.client.upload_content(content, cos_path,
                                           insertOnly=insertOnly)
 
+    def stat(self, cos_path):
+        return self.client.stat(cos_path)
+
     def get_url(self, key):
         return urljoin(self.host, key)
 
