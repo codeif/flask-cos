@@ -2,7 +2,7 @@ import uuid
 from mimetypes import guess_extension
 from urllib.parse import urljoin
 
-from qcos.client import COSClient
+from qcos import Client
 
 
 class COS(object):
@@ -14,21 +14,17 @@ class COS(object):
         secret_id = app.config['COS_SECRET_ID']
         secret_key = app.config['COS_SECRET_KEY']
         region = app.config['COS_REGION']
-        appid = app.config['COS_APPID']
         bucket = app.config['COS_BUCKET']
+        scheme = app.config.get('COS_SCHEME', 'http')
         self.host = app.config['COS_HOST']
 
-        self.client = COSClient(secret_id, secret_key, region, appid, bucket)
+        self.client = Client(secret_id, secret_key, region, bucket, scheme)
 
-    def upload_content(self, content, cos_path, insertOnly=None):
-        """
-        :params insertOnly: 0:覆盖 1:不覆盖 默认不覆盖
-        """
-        return self.client.upload_content(content, cos_path,
-                                          insertOnly=insertOnly)
+    def head_object(self, key):
+        return self.client.head_object(key)
 
-    def stat(self, cos_path):
-        return self.client.stat(cos_path)
+    def put_object(self, key, data, **kwargs):
+        return self.client.put_object(key, data, **kwargs)
 
     def get_url(self, key):
         return urljoin(self.host, key)
