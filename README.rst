@@ -1,4 +1,4 @@
-Flask-COS
+flask-cos
 ==========
 
 腾讯云对象存储的Flask扩展
@@ -8,7 +8,7 @@ Flask-COS
 
 通过pip安装::
 
-    pip install Flask-COS
+    pip install flask-cos
 
 
 使用
