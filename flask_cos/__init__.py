@@ -11,12 +11,12 @@ class COS(object):
             self.init_app(app)
 
     def init_app(self, app):
-        secret_id = app.config['COS_SECRET_ID']
-        secret_key = app.config['COS_SECRET_KEY']
-        region = app.config['COS_REGION']
-        bucket = app.config['COS_BUCKET']
-        scheme = app.config.get('COS_SCHEME', 'http')
-        self.host = app.config['COS_HOST']
+        secret_id = app.config["COS_SECRET_ID"]
+        secret_key = app.config["COS_SECRET_KEY"]
+        region = app.config["COS_REGION"]
+        bucket = app.config["COS_BUCKET"]
+        scheme = app.config.get("COS_SCHEME", "http")
+        self.host = app.config.get("COS_HOST")
 
         self.client = Client(secret_id, secret_key, region, bucket, scheme)
 
@@ -27,17 +27,20 @@ class COS(object):
         return self.client.put_object(key, data, **kwargs)
 
     def get_url(self, key):
-        return urljoin(self.host, key)
+        if self.host:
+            return urljoin(self.host, key)
+        else:
+            return self.client.get_url(key)
 
 
-def gen_filename(mimetype=''):
+def gen_filename(mimetype=""):
     """使用uuid生成随机文件名
     :params mimetype: 用于生成文件扩展名
     """
     ext = guess_extension(mimetype)
-    if ext == '.jpe':
-        ext = '.jpg'
+    if ext == ".jpe":
+        ext = ".jpg"
     elif ext is None:
-        ext = ''
+        ext = ""
 
     return uuid.uuid4().hex + ext
