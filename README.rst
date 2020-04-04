@@ -19,7 +19,10 @@ flask-cos
     from flask_cos import COS
     cos = COS()
     cos.init_app(app)
-    cos.upload(content, cos_path)
+
+    key = "test.txt"
+    data = "content"
+    cos.put_object(key, data)
 
 
 配置项
