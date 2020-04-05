@@ -23,6 +23,9 @@ class COS(object):
     def head_object(self, key):
         return self.client.head_object(key)
 
+    def get_object(self, key):
+        return self.client.get_object(key)
+
     def put_object(self, key, data, **kwargs):
         return self.client.put_object(key, data, **kwargs)
 

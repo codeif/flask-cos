@@ -7,7 +7,7 @@ with open("README.rst") as f:
 
 setup(
     name="flask-cos",
-    version="2.0.2",
+    version="2.0.3",
     description="腾讯云对象存储的Flask扩展",
     long_description=readme,
     author="codeif",
