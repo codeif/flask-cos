@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 from qcos import Client
 
 
-class COS(object):
+class COS(Client):
     def __init__(self, app=None):
         if app:
             self.init_app(app)
@@ -15,25 +15,16 @@ class COS(object):
         secret_key = app.config["COS_SECRET_KEY"]
         region = app.config["COS_REGION"]
         bucket = app.config["COS_BUCKET"]
-        scheme = app.config.get("COS_SCHEME", "http")
+        scheme = app.config.get("COS_SCHEME", "https")
         self.host = app.config.get("COS_HOST")
 
-        self.client = Client(secret_id, secret_key, region, bucket, scheme)
-
-    def head_object(self, key):
-        return self.client.head_object(key)
-
-    def get_object(self, key):
-        return self.client.get_object(key)
-
-    def put_object(self, key, data, **kwargs):
-        return self.client.put_object(key, data, **kwargs)
+        super().__init__(secret_id, secret_key, region, bucket, scheme)
 
     def get_url(self, key):
         if self.host:
             return urljoin(self.host, key)
         else:
-            return self.client.get_url(key)
+            return super().get_object_url(key)
 
 
 def gen_filename(mimetype=""):

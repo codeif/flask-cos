@@ -36,5 +36,6 @@ COS_SECRET_KEY
 COS_REGION
 COS_APPID
 COS_BUCKET
-COS_HOST            选填，可以通过cos.host访问设置的值，用于组成文件url
+COS_SCHEME          选填，https或者http，默认https，访问api的协议
+COS_HOST            选填，可以通过cos.host设置的值，组成文件静态文件url
 ================    ==================================================================
