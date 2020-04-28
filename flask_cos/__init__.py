@@ -6,7 +6,8 @@ from qcos import Client
 
 
 class COS(Client):
-    def __init__(self, app=None):
+    def __init__(self, bucket=None, app=None):
+        self.bucket = bucket
         if app:
             self.init_app(app)
 
@@ -14,7 +15,7 @@ class COS(Client):
         secret_id = app.config["COS_SECRET_ID"]
         secret_key = app.config["COS_SECRET_KEY"]
         region = app.config["COS_REGION"]
-        bucket = app.config["COS_BUCKET"]
+        bucket = self.bucket or app.config["COS_BUCKET"]
         scheme = app.config.get("COS_SCHEME", "https")
         self.host = app.config.get("COS_HOST")
 
