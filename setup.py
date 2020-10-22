@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 from setuptools import find_packages, setup
 
-with open("README.rst") as f:
+with open("README.rst", encoding="utf-8") as f:
     readme = f.read()
 
 
 setup(
     name="flask-cos",
-    version="2.1.1",
+    version="2.1.2",
     description="腾讯云对象存储的Flask扩展",
     long_description=readme,
     author="codeif",
