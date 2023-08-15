@@ -2,6 +2,8 @@ import uuid
 from mimetypes import guess_extension
 from urllib.parse import urljoin
 
+import requests
+from flask import _app_ctx_stack
 from qcos import Client
 
 
@@ -20,6 +22,20 @@ class COS(Client):
         self.host = app.config.get("COS_HOST")
 
         super().__init__(secret_id, secret_key, region, bucket, scheme)
+        app.teardown_appcontext(self.teardown)
+
+    def teardown(self, exception):
+        ctx = _app_ctx_stack.top
+        if hasattr(ctx, "requests_session"):
+            ctx.requests_session.close()
+
+    @property
+    def session(self):
+        ctx = _app_ctx_stack.top
+        if ctx is not None:
+            if not hasattr(ctx, "requests_session"):
+                ctx.requests_session = requests.Session()
+            return ctx.requests_session
 
     def get_url(self, key):
         if self.host:
