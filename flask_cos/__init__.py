@@ -37,6 +37,10 @@ class COS(Client):
                 ctx.requests_session = requests.Session()
             return ctx.requests_session
 
+    @session.setter
+    def session(self, value):
+        pass
+
     def get_url(self, key):
         if self.host:
             return urljoin(self.host, key)
