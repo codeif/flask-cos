@@ -5,6 +5,7 @@ from urllib.parse import urljoin
 import requests
 from flask import g
 from qcos import Client
+from requests.adapters import HTTPAdapter
 
 
 class COS(Client):
@@ -25,16 +26,19 @@ class COS(Client):
         app.teardown_appcontext(self.teardown)
 
     def teardown(self, exception):
-        requests_session = g.pop("requests_session", None)
-        if requests_session is not None:
-            requests_session.close()
+        cos_session = g.pop("cos_session", None)
+        if cos_session is not None:
+            cos_session.close()
 
     @property
     def session(self):
-        requests_session = g.get("requests_session")
-        if requests_session is None:
-            g.requests_session = requests.Session()
-        return g.requests_session
+        cos_session = g.get("cos_session")
+        if cos_session is None:
+            cos_session = requests.Session()
+            http_adpter = HTTPAdapter(max_retries=3)
+            cos_session.mount("http://", http_adpter)
+            cos_session.mount("https://", http_adpter)
+        return g.cos_session
 
     @session.setter
     def session(self, value):
