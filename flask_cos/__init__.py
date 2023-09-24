@@ -38,6 +38,7 @@ class COS(Client):
             http_adpter = HTTPAdapter(max_retries=3)
             cos_session.mount("http://", http_adpter)
             cos_session.mount("https://", http_adpter)
+        g.cos_session = cos_session
         return g.cos_session
 
     @session.setter
